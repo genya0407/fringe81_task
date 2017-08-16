@@ -1,0 +1,2 @@
+- most answer: [fringe.scala](https://github.com/genya0407/fringe81_task/blob/master/fringe.scala)
+- Q4: [answer.md](https://github.com/genya0407/fringe81_task/blob/master/answer.md)
