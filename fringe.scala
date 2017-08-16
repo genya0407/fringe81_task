@@ -1,3 +1,7 @@
+import scala.concurrent.{Future, Promise, Await}
+import scala.concurrent.duration.Duration
+import scala.concurrent.ExecutionContext.Implicits.global
+
 object Fringe {
   def main(args: Array[String]): Unit = {
     // Q1
@@ -23,6 +27,10 @@ object Fringe {
       "hanako" -> Map("math"->84, "english"->78, "social"->66))
     val expected = Map("ichiro" -> 90, "hanako" -> 81)
     assert_eq(passStudents(scores), expected)
+
+    // Q6
+    val r1 = firstOf(Future{ Thread.sleep(9000); 1 }, Future{ Thread.sleep(3000); 2 })
+	println(Await.result(r1, Duration.Inf))
   }
 
   def show(value: Option[String]): Unit = {
@@ -41,6 +49,13 @@ object Fringe {
     }.collect {
       case (student, Some(score)) if score >= 80 => student -> score
     }
+  }
+
+  def firstOf[A](v1: Future[A], v2: Future[A]): Future[A] = {
+  	val promise = Promise[A]
+  	v1.onSuccess { case value => if (!promise.isCompleted) promise.success(value) }
+  	v2.onSuccess { case value => if (!promise.isCompleted) promise.success(value) }
+  	promise.future
   }
 
   def assert_eq[Eq](a: Eq, b: Eq): Unit = {
