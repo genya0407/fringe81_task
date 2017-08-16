@@ -5,6 +5,6 @@ object Fringe {
   }
 
   def show(value: Option[String]): Unit = {
-  	value.map(v => println(v))
+  	value.map(println(_))
   }
 }
