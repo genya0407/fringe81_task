@@ -6,6 +6,10 @@ object Fringe {
 		assert_eq(getFirst(Some("hello")), "h")
 		assert_eq(getFirst(Some("")), "")
 		assert_eq(getFirst(None), "")
+
+		assert_eq(NumEnglishDictionary.translate(Some(1)), Some("one"))
+		assert_eq(NumEnglishDictionary.translate(Some(3)), None)
+		assert_eq(NumEnglishDictionary.translate(None), None)
 	}
 
 	def show(value: Option[String]): Unit = {
@@ -22,5 +26,12 @@ object Fringe {
 		} else {
 			throw new Exception(s"`$a` is not `$b`")
 		}
+	}
+}
+
+object NumEnglishDictionary {
+	private val dictionary = Map(1->"one", 2->"two")
+	def translate(num: Option[Int]): Option[String] = {
+		num.flatMap(dictionary.get(_))
 	}
 }
