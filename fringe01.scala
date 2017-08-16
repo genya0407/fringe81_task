@@ -1,6 +1,6 @@
 object Fringe {
   def main(args: Array[String]): Unit = {
-    show(Some("hoge"))
+    show(Some("hello"))
     show(None)
   }
 
