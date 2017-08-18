@@ -42,13 +42,14 @@ object Fringe {
   }
 
   def passStudents(scores: Map[String, Map[String, Int]]): Map[String, Int] = {
-    scores.mapValues { subjects =>
-      val mEnglish = subjects.get("english")
-      val mMath = subjects.get("math")
-      mEnglish.flatMap(english => mMath.map(math => (english + math)/2))
-    }.collect {
-      case (student, Some(score)) if score >= 80 => student -> score
+    scores.mapValues { subjects: Map[String, Int] =>
+      for {
+        english_score <- subjects.get("english")
+        math_score <- subjects.get("math")
+      } yield { (english_score + math_score) / 2 }
     }
+  } collect {
+    case (key, Some(score)) if score > 80 => key -> score
   }
 
   def firstOf[A](v1: Future[A], v2: Future[A]): Future[A] = {
