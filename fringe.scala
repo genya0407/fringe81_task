@@ -34,7 +34,7 @@ object Fringe {
   }
 
   def show(value: Option[String]): Unit = {
-    value.map(println(_))
+  	value.foreach(println(_))
   }
 
   def getFirst(value: Option[String]): String = {
